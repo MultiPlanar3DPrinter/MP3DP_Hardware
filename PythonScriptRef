@@ -1,0 +1,23 @@
+CLEAN1 = ["JP", "J", "TP", "R", "C", "L", "SW", "D", "Q", "RV"]
+CLEAN = ["L"]
+modules = GetBoard().GetModules()
+
+for m in modules:
+    ref = m.GetReference()
+
+    # Hide reference when on the black list
+    if any(test in ref for test in CLEAN):
+        m.Reference().SetLayer(F_Fab)
+    else:
+        m.Reference().SetLayer(F_Fab)
+    
+    # Hide all values
+    #m.Value().SetLayer(F.Fab)
+
+    # Hide other text in footprints (like capacitors)
+    gi = m.GraphicalItems()
+    for item in gi:
+        if (item.GetClass() == "MTEXT"):
+            item.SetLayer(F_Fab)
+
+Refresh()
